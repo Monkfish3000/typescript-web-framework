@@ -1,13 +1,15 @@
-import { UserProps } from './User';
+export class Attributes<T extends {}> {
+  constructor(private data: T) {}
 
-export class Attributes<T> {
-  constructor(private data: UserProps) {}
+  get = <K extends keyof T>(key: K): T[K] => {
+    return this.data[key];
+  };
 
-  get(propName: string): string | number {
-    return this.data[propName];
+  set(update: T): void {
+    Object.assign(this.data, update);
   }
 
-  set(update: UserProps): void {
-    Object.assign(this.data, update);
+  getAll(): T {
+    return this.data;
   }
 }
