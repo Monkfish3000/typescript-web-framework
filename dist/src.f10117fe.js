@@ -129,17 +129,32 @@ var UserForm = /** @class */function () {
     var _this = this;
     this.parent = parent;
     this.model = model;
+    this.onSetNameClick = function () {
+      var input = _this.parent.querySelector('input');
+      var name = input === null || input === void 0 ? void 0 : input.value;
+      _this.model.set({
+        name: name
+      });
+    };
     this.onSetAgeClick = function () {
       _this.model.setRandomAge();
     };
+    this.bindModel();
   }
+  UserForm.prototype.bindModel = function () {
+    var _this = this;
+    this.model.on('change', function () {
+      _this.render();
+    });
+  };
   UserForm.prototype.eventsMap = function () {
     return {
-      'click:.set-age': this.onSetAgeClick
+      'click:.set-age': this.onSetAgeClick,
+      'click:.set-name': this.onSetNameClick
     };
   };
   UserForm.prototype.template = function () {
-    return "\n            <div>\n                <h1>User Form</h1>\n                <div>User name: ".concat(this.model.get('name'), " </div>\n                <div>User age: ").concat(this.model.get('age'), " </div>\n                <input />\n                <button>Click Me</button>\n                <button class=\"set-age\">Set random age</button>\n            </div>\n        ");
+    return "\n            <div>\n                <h1>User Form</h1>\n                <div>User name: ".concat(this.model.get('name'), " </div>\n                <div>User age: ").concat(this.model.get('age'), " </div>\n                <input />\n                <button class=\"set-name\">Change Name</button>\n                <button class=\"set-age\">Set random age</button>\n            </div>\n        ");
   };
   UserForm.prototype.bindEvents = function (fragment) {
     var eventsMap = this.eventsMap();
@@ -156,6 +171,7 @@ var UserForm = /** @class */function () {
     }
   };
   UserForm.prototype.render = function () {
+    this.parent.innerHTML = '';
     var templateElement = document.createElement('template');
     templateElement.innerHTML = this.template();
     this.bindEvents(templateElement.content);
@@ -5668,7 +5684,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62133" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64614" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
